@@ -8,7 +8,7 @@ void free_objects(t_object *objects, t_vars *vars)
 	int i;
 
 	i = 0;
-	while (i < OBJ_COUNT)
+	while (i < vars->obj_count)
 	{
 		if (objects[i].type == SPHERE || objects[i].type == CYLINDER
         || objects[i].type == CONE)
@@ -29,7 +29,7 @@ void free_objects(t_object *objects, t_vars *vars)
     }
     if (objects[i].has_texture == 1)
     {
-      free(objects[i].checker_matrix);
+      delete_matrix(objects[i].checker_matrix);
     }
 		i++;
 	}
@@ -86,7 +86,7 @@ int main(int ac, char **av)
 {
 	t_vars vars;
 
-  parse(ac, av, &vars);
+ 	parse(ac, av, &vars);
 	vars.mlx_ptr = mlx_init();
 	vars.win_ptr = mlx_new_window(vars.mlx_ptr, WIDTH, HEIGHT, "Raytracing goes prr");
 	init_camera(&vars.cam);

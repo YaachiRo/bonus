@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Simple_material.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olahrizi <olahrizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: idelfag <idelfag@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 03:29:30 by olahrizi          #+#    #+#             */
-/*   Updated: 2023/12/27 10:21:09 by olahrizi         ###   ########.fr       */
+/*   Updated: 2024/01/03 18:32:48 by idelfag          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_vec3 compute_color(t_vars *vars, t_info *info, t_ray *camera_ray, int ref_coun
 	t_vec3 spc_color;
 	t_vec3 ref_color;
 	t_vec3 helper;
-	// (void ) ref_count;
 
 	spc_color = new_vector(0, 0, 0);
 	if (info->e->has_bump == 1)
@@ -36,7 +35,7 @@ t_vec3 compute_color(t_vars *vars, t_info *info, t_ray *camera_ray, int ref_coun
 		diff_color = diffuse_color(vars, info, info->e->base_color);
 	mat_color = diff_color;
 	if (info->e->has_material == 1)
-	{	
+	{
 		if (info->e->reflectivity)
 		{
 			ref_color = reflection_color(vars, info, camera_ray, ref_count);

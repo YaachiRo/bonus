@@ -1,7 +1,7 @@
 #ifndef HEADER_H
 #define HEADER_H
 
-#include <mlx.h>
+# include <mlx.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -12,17 +12,15 @@
 #include <time.h>
 #include "parse/parse.h"
 
-#define WIDTH 800
-#define HEIGHT 600
+#define WIDTH 1280
+#define HEIGHT 720
 #define M_PI 3.14159265358979323846
 #define HALFPI 1.5708
 
 # define FORWARD 1
 # define BACKWARD 0
-# define MAX_REF 10
+# define MAX_REF 3
 # define OBJ_COUNT 7
-
-
 
 
 #define EPSILON 1e-21f

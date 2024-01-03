@@ -94,7 +94,7 @@ CC = cc
 
 LIBFT = libft/libft.a
 
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -Ofast
 
 LDFLAGS = -Llibft -lft -lmlx -lXext -lX11 -lm -lz
 

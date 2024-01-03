@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: idelfag < idelfag@student.1337.ma>         +#+  +:+       +#+        */
+/*   By: idelfag <idelfag@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 08:09:37 by idelfag           #+#    #+#             */
-/*   Updated: 2024/01/02 23:52:46 by idelfag          ###   ########.fr       */
+/*   Updated: 2024/01/03 18:25:04 by idelfag          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	check_plane(t_object *obj)
 	if ((obj->base_color.y < 0.0f) || (obj->base_color.y > 1.0f))
 		return (0);
 	if ((obj->base_color.z < 0.0f) || (obj->base_color.z > 1.0f))
+		return (0);
+	if (obj->d_normal.x == 0 && obj->d_normal.y == 0 && obj->d_normal.z == 0)
 		return (0);
 	return (1);
 }

@@ -76,7 +76,7 @@ t_vec3 diffuse_color(t_vars *vars, t_info *info, t_vec3 base_color)
 	
 	i = 0;
 	intensity = 0;
-	while (i < 1)
+	while (i < vars->l_count)
 	{
 		validillum = compute_illimunation(&vars->lights[i], info, vars, &intensity);
 		if (validillum)

@@ -6,7 +6,7 @@
 /*   By: idelfag <idelfag@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 23:25:50 by idelfag           #+#    #+#             */
-/*   Updated: 2024/01/03 04:44:19 by idelfag          ###   ########.fr       */
+/*   Updated: 2024/01/03 18:36:02 by idelfag          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	parse_shininess(char **line, t_vars *vars, int *index, int *i)
 	if (line[*i][j] || !(vars->parse.obj[*index].shininess >= 0
 		&& vars->parse.obj[*index].shininess <= 50))
 		msg_exit_free("bad config file\n", 1, vars);
+	vars->parse.obj[*index].has_material = 1;
 }
 
 void	parse_reflectivity(char **line, t_vars *vars, int *index, int *i)
@@ -38,6 +39,7 @@ void	parse_reflectivity(char **line, t_vars *vars, int *index, int *i)
 	if (line[*i][j] || !(vars->parse.obj[*index].reflectivity >= 0
 		&& vars->parse.obj[*index].reflectivity <= 1))
 		msg_exit_free("bad config file\n", 1, vars);
+	vars->parse.obj[*index].has_material = 1;
 }
 
 void	parse_texture(char **line, t_vars *vars, int *index, int *i)

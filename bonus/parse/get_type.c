@@ -6,7 +6,7 @@
 /*   By: idelfag <idelfag@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 23:05:59 by idelfag           #+#    #+#             */
-/*   Updated: 2024/01/03 04:48:16 by idelfag          ###   ########.fr       */
+/*   Updated: 2024/01/03 18:29:19 by idelfag          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ void	pre_init(t_vars *vars)
 		free_tab(vars->lines);
 		message_exit("bad config file\n", 1);
 	}
-	vars->lights = malloc(sizeof(t_light) * (count_lights(vars->lines)));
-	vars->parse.obj = NULL;
+	vars->l_count = count_lights(vars->lines);
+	vars->lights = malloc(sizeof(t_light) * (vars->l_count));
 	vars->obj_count = count_objs(vars->lines);
-	vars->parse.obj = malloc(sizeof(t_object) * (vars->obj_count + 1));
+	vars->parse.obj = malloc(sizeof(t_object) * (vars->obj_count));
 	set_default(vars);
 	fill_lights(vars);
 }

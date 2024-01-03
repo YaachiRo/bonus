@@ -6,7 +6,7 @@
 /*   By: idelfag <idelfag@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 23:05:53 by idelfag           #+#    #+#             */
-/*   Updated: 2024/01/03 04:17:01 by idelfag          ###   ########.fr       */
+/*   Updated: 2024/01/03 18:28:43 by idelfag          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ typedef struct s_vars
 	t_parse			parse;
 	int				obj_count;
 	char			**line;
+	int				l_count;
 }	t_vars;
 
 void	free_tab(char **tab);

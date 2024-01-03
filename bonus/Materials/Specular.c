@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Specular.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olahrizi <olahrizi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: idelfag <idelfag@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 06:21:34 by olahrizi          #+#    #+#             */
-/*   Updated: 2023/12/26 12:49:49 by olahrizi         ###   ########.fr       */
+/*   Updated: 2024/01/03 18:37:03 by idelfag          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_vec3 specular_highlight(t_vars *vars, t_info *info, t_ray *camera_ray)
 	blue = .0f;
 	j = 0;
 	intensity = 0.0f;
-	while (j < 1)
+	while (j < vars->l_count)
 	{
 		lighdir = normalized(vec_sub(vars->lights[j].position, info->hitpoint));
 		start = vec_add(info->hitpoint, scale_vector(lighdir, 0.0001f));
