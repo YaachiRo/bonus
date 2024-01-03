@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bonus_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: idelfag < idelfag@student.1337.ma>         +#+  +:+       +#+        */
+/*   By: idelfag <idelfag@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 23:25:50 by idelfag           #+#    #+#             */
-/*   Updated: 2024/01/03 00:23:38 by idelfag          ###   ########.fr       */
+/*   Updated: 2024/01/03 04:44:19 by idelfag          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,6 @@ void	parse_texture(char **line, t_vars *vars, int *index, int *i)
 
 void	parse_bump(char **line, t_vars *vars, int *index, int *i)
 {
-	int	j;
-
-	j = 0;
 	(*i)++;
 	if (!line[*i])
 		msg_exit_free("bump path path is not found\n", 1, vars);

@@ -1,74 +1,125 @@
-NAME = minirt
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -Ofast
-LDFLAGS = -L./parse/libft -lft -lmlx -lXext -lX11 -lm -lz
+NAME 	= minirt
 
-LIBFT = parse/libft/libft.a
+BONUS 	= minirt_bonus
 
-SRCS =	parse/tools.c 				\
-		parse/tools2.c 				\
-		parse/tools3.c 				\
-		parse/parse.c 				\
-		parse/whitesplit.c 			\
-		parse/camera.c 				\
-		parse/light.c 				\
-		parse/ambient_lightning.c 	\
-		parse/get_type.c				\
-		parse/cylender.c 				\
-		parse/sphere.c				\
-		parse/plane.c \
-		parse/cone.c	\
-		parse/bonus_tools.c 
+SRCS =	mandatory/parse/tools.c 				\
+		mandatory/parse/tools2.c 				\
+		mandatory/parse/tools3.c 				\
+		mandatory/parse/parse.c 				\
+		mandatory/parse/whitesplit.c 			\
+		mandatory/parse/camera.c 				\
+		mandatory/parse/light.c 				\
+		mandatory/parse/ambient_lightning.c 	\
+		mandatory/parse/get_type.c			\
+		mandatory/parse/cylender.c 			\
+		mandatory/parse/sphere.c				\
+		mandatory/parse/plane.c
 
-SRCS +=	camera.c \
-		vectors.c \
-		Matrix/init.c \
-		Matrix/inverse.c \
-		Matrix/matrix.c \
-		Matrix/Minor.c \
-		Matrix/Multiplication.c \
-		Transformation/Gtfm.c \
-		Transformation/setup.c \
-		image/image.c \
-		image/image_utils.c \
-		Normals.c \
-		raytrace.c \
-		main.c \
-		init_objects.c \
-		Objects/Sphere.c \
-		Objects/Plane.c \
-		Objects/Cylinder.c \
-		Objects/Cylinder_utils.c \
-		Objects/Cone.c \
-		Objects/Cone_utils.c \
-		Materials/Diffuse.c \
-		Materials/Specular.c \
-		Materials/Simple_material.c \
-		Materials/Reflection.c \
-		textures/checker.c \
-		textures/bump_map.c \
+SRCS +=	mandatory/camera.c \
+		mandatory/vectors.c \
+		mandatory/vectors2.c \
+		mandatory/vectors3.c \
+		mandatory/Matrix/init.c \
+		mandatory/Matrix/inverse.c \
+		mandatory/Matrix/matrix.c \
+		mandatory/Matrix/Minor.c \
+		mandatory/Matrix/Multiplication.c \
+		mandatory/Transformation/Gtfm.c \
+		mandatory/Transformation/setup.c \
+		mandatory/image/image.c \
+		mandatory/image/image_utils.c \
+		mandatory/Normals.c \
+		mandatory/raytrace.c \
+		mandatory/Objects/Sphere.c \
+		mandatory/Objects/Plane.c \
+		mandatory/Objects/Cylinder.c \
+		mandatory/Objects/Cylinder_utils.c \
+		mandatory/Materials/Diffuse.c \
+		mandatory/free_utils.c \
+		mandatory/random.c \
+		mandatory/init_objects.c \
+		mandatory/main_mandatory.c
 
-OBJS = $(SRCS:.c=.o)
+SRCBONUS =	bonus/parse/tools.c 				\
+			bonus/parse/tools2.c 				\
+			bonus/parse/tools3.c 				\
+			bonus/parse/parse.c 				\
+			bonus/parse/whitesplit.c 			\
+			bonus/parse/camera.c 				\
+			bonus/parse/light.c 				\
+			bonus/parse/ambient_lightning.c 	\
+			bonus/parse/get_type.c				\
+			bonus/parse/cylender.c 				\
+			bonus/parse/sphere.c				\
+			bonus/parse/plane.c 				\
+			bonus/parse/cone.c					\
+			bonus/parse/bonus_tools.c 
 
-all : $(NAME)
+SRCBONUS +=	bonus/camera.c \
+			bonus/vectors.c \
+			bonus/Matrix/init.c \
+			bonus/Matrix/inverse.c \
+			bonus/Matrix/matrix.c \
+			bonus/Matrix/Minor.c \
+			bonus/Matrix/Multiplication.c \
+			bonus/Transformation/Gtfm.c \
+			bonus/Transformation/setup.c \
+			bonus/image/image.c \
+			bonus/image/image_utils.c \
+			bonus/Normals.c \
+			bonus/raytrace.c \
+			bonus/init_objects.c \
+			bonus/Objects/Sphere.c \
+			bonus/Objects/Plane.c \
+			bonus/Objects/Cylinder.c \
+			bonus/Objects/Cylinder_utils.c \
+			bonus/Objects/Cone.c \
+			bonus/Objects/Cone_utils.c \
+			bonus/Materials/Diffuse.c \
+			bonus/Materials/Specular.c \
+			bonus/Materials/Simple_material.c \
+			bonus/Materials/Reflection.c \
+			bonus/textures/checker.c \
+			bonus/textures/bump_map.c \
+			bonus/main_bonus.c \
+
+OBJS = ${SRCS:.c=.o}
+
+OBJSBONUS =${SRCBONUS:.c=.o}
 
 %.o : %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME) : $(OBJS) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
+CC = cc
+
+LIBFT = libft/libft.a
+
+CFLAGS = -Wall -Wextra
+
+LDFLAGS = -Llibft -lft -lmlx -lXext -lX11 -lm -lz
+
+RM = rm -rf
+
+all : ${NAME}
+
+${NAME}: ${OBJS} $(LIBFT)
+				@${CC} ${CFLAGS} ${OBJS} ${LDFLAGS} -o ${NAME}
 
 ${LIBFT}:
-	@make -C parse/libft >/dev/null
+	@make -C libft >/dev/null
 
-clean :
-	@rm -rf $(OBJS)
-	@make clean -C parse/libft >/dev/null
+clean:
+		@${RM} ${OBJS} ${OBJSBONUS}
+		@make clean -C libft >/dev/null
 
-fclean : clean
-	@rm -rf $(NAME)
-	@rm -rf $(NAME) parse/libft/libft.a
+bonus : ${BONUS}
 
-re : fclean all
+${BONUS}: ${OBJSBONUS} $(LIBFT)
+				@${CC} ${CFLAGS} ${OBJSBONUS} ${LDFLAGS} -o ${BONUS}
 
-.PHONY : clean fclean all re
+fclean:		clean
+			@${RM} ${NAME} ${BONUS} libft/libft.a
+
+re:			fclean all
+
+.PHONY:		clean fclean all re

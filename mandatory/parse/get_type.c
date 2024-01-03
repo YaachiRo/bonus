@@ -3,14 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   get_type.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: idelfag < idelfag@student.1337.ma>         +#+  +:+       +#+        */
+/*   By: idelfag <idelfag@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 23:05:59 by idelfag           #+#    #+#             */
-/*   Updated: 2024/01/03 00:22:27 by idelfag          ###   ########.fr       */
+/*   Updated: 2024/01/01 15:08:09 by idelfag          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
+
+int	check_if_valid(char **lines, char c, int min, int max)
+{
+	int	i;
+	int	j;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (lines[i])
+	{
+		j = 0;
+		while (lines[i][j] && ft_isspace(lines[i][j]))
+			j++;
+		if (lines[i][j] == c)
+			count++;
+		i++;
+	}
+	if (count >= min && count <= max)
+		return (1);
+	return (0);
+}
 
 void	parse_line(t_vars *vars, int *index)
 {
@@ -18,87 +40,58 @@ void	parse_line(t_vars *vars, int *index)
 		parse_camera(vars->line, vars);
 	else if (!ft_strcmp(vars->line[0], "A"))
 		parse_ambient(vars->line, vars);
+	else if (!ft_strcmp(vars->line[0], "L"))
+		parse_light(vars->line, vars);
 	else if (!ft_strcmp(vars->line[0], "sp"))
 		parse_sphere(vars->line, vars, index);
 	else if (!ft_strcmp(vars->line[0], "pl"))
 		parse_plane(vars->line, vars, index);
 	else if (!ft_strcmp(vars->line[0], "cy"))
 		parse_cylender(vars->line, vars, index);
-	else if (!ft_strcmp(vars->line[0], "co"))
-		parse_cone(vars->line, vars, index);
-	else if (!ft_strcmp(vars->line[0], "L"))
-	{
-		free_tab(vars->line);
-		return ;
-	}
 	else
 		msg_exit_free("bad configuration file\n", 1, vars);
 	free_tab(vars->line);
 }
 
-void	set_default(t_vars *vars)
+int	count_objs(char **line)
 {
-	int	i;
+	int		i;
+	int		count;
+	char	**res;
 
 	i = 0;
-	while (i < vars->obj_count)
+	count = 0;
+	while (line[i])
 	{
-		vars->parse.obj[i].has_bump = 0;
-		vars->parse.obj[i].has_material = 0;
-		vars->parse.obj[i].has_texture = 0;
-		vars->parse.obj[i].bump_path = NULL;
-		vars->parse.obj[i].texture_path = NULL;
+		res = ft_split_two(line[i], "\t\n\v\f\r ");
+		if (!ft_strcmp(res[0], "sp"))
+			count++;
+		if (!ft_strcmp(res[0], "cy"))
+			count++;
+		if (!ft_strcmp(res[0], "pl"))
+			count++;
+		free_tab(res);
 		i++;
 	}
-}
-
-void	fill_lights(t_vars *vars)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (vars->lines[i])
-	{
-		vars->line = ft_split_two(vars->lines[i], "\t\n\v\f\r ");
-		if (!ft_strcmp(vars->line[0], "L"))
-		{
-			parse_light(vars->line, vars, j);
-			j++;
-		}
-		free_tab(vars->line);
-		i++;
-	}
-}
-
-void	pre_init(t_vars *vars)
-{
-	if (!check_if_valid(vars->lines, 'C', 1, 1)
-		|| !check_if_valid(vars->lines, 'L', 1, -1)
-		|| !check_if_valid(vars->lines, 'A', 0, 1))
-	{
-		free_tab(vars->lines);
-		message_exit("bad config file\n", 1);
-	}
-	vars->lights = malloc(sizeof(t_light) * (count_lights(vars->lines)));
-	vars->parse.obj = NULL;
-	fill_lights(vars);
-	vars->obj_count = count_objs(vars->lines);
-	vars->parse.obj = malloc(sizeof(t_object) * (vars->obj_count + 1));
-	set_default(vars);
+	return (count);
 }
 
 void	get_content(t_vars *vars)
 {
 	int		i;
 	int		index;
-	int		flag;
 
 	i = 0;
-	flag = 0;
 	index = 0;
-	pre_init(vars);
+	if (!check_if_valid(vars->lines, 'C', 1, 1)
+		|| !check_if_valid(vars->lines, 'L', 1, 1)
+		|| !check_if_valid(vars->lines, 'A', 0, 1))
+	{
+		free_tab(vars->lines);
+		message_exit("bad config file\n", 1);
+	}
+	vars->obj_count = count_objs(vars->lines);
+	vars->parse.obj = malloc(sizeof(t_object) * (vars->obj_count + 1));
 	while (vars->lines[i])
 	{
 		vars->line = ft_split_two(vars->lines[i], "\t\n\v\f\r ");

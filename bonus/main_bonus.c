@@ -54,7 +54,7 @@ void free_image(t_image *image)
 	free(image);
 }
 
-int handle_exit(t_vars *vars)
+static int handle_exit(t_vars *vars)
 {
 	free_objects(vars->objects, vars);
 	free(vars->lights);
